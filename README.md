@@ -18,7 +18,7 @@ The cipher key is a dot-delimited string with six positive integers:
 ```
 offset.initSalt.posPower.offPower.prevPower.cap
 ```
-The key is inputed by the user.
+The key is input by the user.
 
 Each byte is essentially offset by some constant offset value, its own index, and the value of a previous byte (encrypted).
 
@@ -27,24 +27,24 @@ Each parameter of the key controls a part of the internal state transformation a
 
 - `offset`: constant value by which each byte will be offset
 - `offPower`:  Multiplied with `offset`  before offsetting the current byte by it
-- `posPower`: Multiplied with current byte index before offsetting the current byte by it
-- `prevPower`: Multiplied with previous (already encrypted) byte value before offsetting the current byte by it
-- `initSalt`: Acts as previous byte value for the first byte of the file
+- `posPower`: Multiplied with the current byte index before offsetting the current byte by it
+- `prevPower`: Multiplied with the previous (already encrypted) byte value before offsetting the current byte by it
+- `initSalt`: Acts as the previous byte value for the first byte of the file
 - `cap`: mods the sum of all above mentioned offsets before it is applied
 
 So each byte is shifted by a modifier, 
 where modifer = (offset * offPower + current byte index * posPower + previous encrypted byte value * prevPower) % cap +1
 
-note that if the current byte index is 0, initSalt is used instead of previous encrypted byte value
+note that if the current byte index is 0, initSalt is used instead of the previous encrypted byte value
 
 ---
 
 ## 🔄 Magic Numbers
 
 Aside from the previously described "core transformation", each byte also undergoes a "magic number" transformation.
-For each byte, a magic number is generated, based on its calculated modifier, index, and their modulo relation to various key values.
-This proccess is non-linear and non-continous, however, fully deterministic
-For most bytes the magic number will be 0, however for a significant portion, it will be nonzero.
+For each byte, a magic number is generated based on its calculated modifier, index, and its modulo relation to various key values.
+This process is non-linear and non-continuous, however, fully deterministic
+For most bytes the magic number will be 0; however for a significant portion, it will be nonzero.
 
 Magic numbers are generated with the `generateMagicNumber` function, which is implemented through a series of arbitrary if-return statements
 
@@ -59,7 +59,7 @@ if ((cap * idx) % 10 == (modifier * idx) % 10) {
 }
 ...
 ```
-see `Cipher::generateMagicNumber(int modifier, int idx)` in `GaulishCipher.cpp` for all if statements
+See `Cipher::generateMagicNumber(int modifier, int idx)` in `GaulishCipher.cpp` for all if statements
 
 ---
 
@@ -67,7 +67,7 @@ see `Cipher::generateMagicNumber(int modifier, int idx)` in `GaulishCipher.cpp` 
 
 | Property             | Description                                                                        |
 |----------------------|------------------------------------------------------------------------------------|
-| **Deterministic**    | Same input with same key always gives same output.                                 |
+| **Deterministic**    | Same input with the same key always gives the same output.                         |
 | **Invertible**       | Decryption is possible only with the original key.                                 |
 | **Nonlinear**        | Uses conditional logic with modulus and position-dependent branches (magic numbers)|
 | **Stateful**         | Output at index `i` depends on previous byte(s), introducing chaining.             |
@@ -78,38 +78,40 @@ see `Cipher::generateMagicNumber(int modifier, int idx)` in `GaulishCipher.cpp` 
 ## ✅ Strengths
 
 - ~2<sup>186</sup> possible keys, making brute force impossible
-- Non-linear transformation logic – the use of complex, condition-based branching (via generateMagicNumber) resists algebraic and equation-based cryptanalysis.
-- Obscure control flow – hardcoded modular and positional rules obscure the cipher’s internal state evolution, making static reverse engineering nontrivial.
-- Dynamic, stateful behavior – the output for each byte depends on previous state and position, defeating simple frequency or statistical analysis.
+- Non-linear transformation logic – using complex, condition-based branching (via generateMagicNumber) resists algebraic and equation-based cryptanalysis.
+- Obscure control flow: Hardcoded modular and positional rules obscure the cipher’s internal state evolution, making static reverse engineering nontrivial.
+- Dynamic, stateful behavior—the output for each byte depends on its previous state and position, defeating simple frequency or statistical analysis.
 - High key sensitivity – even minor changes in any of the six key parameters result in entirely different ciphertext, reinforcing avalanche behavior.
 
 ---
 
 ## ❌ Weaknesses
 
-- Mean byte value of encrypted text can be used to narrow down the value of the key
-- Miniscule probability of key overlap (different keys leading to same ciphertext)
+- The mean byte value of encrypted text can be used to narrow down the value of the key
+- Minuscule probability of key overlap (different keys leading to the same ciphertext)
 - **Not cryptographically secure** — no use of secure PRNG, entropy estimation, or proven block cipher structure
-- **Not resistant to known plaintext attacks** (e.g. knowing the first few bytes can lead to key leakage)
+- **Not resistant to known plaintext attacks** (e.g., knowing the first few bytes can lead to key leakage)
 - Lacks forward secrecy or key derivation
 
 ---
 
 ## 🚀 Usage
 
-First, download GaulishCipher.exe (source code files are not neccesary to run the exe)
+The program can encrypt any file type
 
-Run the exe file directly by double clicking it. It will prompt you to enter what action you want to take (1 for encrypt, 2 for decrypt), target file path, key, and output file path.
+First, download GaulishCipher.exe (source code files are not necessary to run the exe)
+
+Run the exe file directly by double-clicking it. It will prompt you to enter what action you want to take (1 for encrypt, 2 for decrypt), target file path, key, and output file path.
 
 - The program supports file paths with forward and backwards slashes. 
 - The program does not care if the file path is in "double" or 'single' quotes, or no quotes
-- If you only provide file name with no extension for output path, the program will encrypt as a .gaul file and decrypt as .txt by default.
-- If you only provide file name, no directory, for output path, the program will default to target path.
+- If you only provide a file name with no extension for the output path, the program will encrypt as a .gaul file and decrypt as .txt by default.
+- If you only provide a file name, no directory, for the output path, the program will default to the target path.
 - The program supports relative paths.
 
-❌Spaces in a file name can cause undefined behavior. Do not encrypt files with space in their name(might fix this later)❌
+❌Spaces in a file name can cause undefined behavior. Do not encrypt files with spaces in their name(might fix this later)❌
 
-You can also run the program from console. If you do you can use args. Args should be formatted the same as prompted input and need to be written in the following order
+You can also run the program from the console. If you do, you can use args. Args should be formatted the same as prompted input and need to be written in the following order
 
 `GaulishCipher.exe actionNum targetPath key outPath`
 
