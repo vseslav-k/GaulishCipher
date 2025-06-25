@@ -115,7 +115,7 @@ You can also run the program from console. If you do you can use args. Args shou
 
 for example
 
-`GaulishCipher.exe 1 C:\Users\vsesl\Documents\msg.txt 2.3.4.5.6.7 encryptedMsg.gaul`
+`GaulishCipher.exe 1 C:\Users\usr\Documents\msg.txt 2.3.4.5.6.7 encryptedMsg.gaul`
 
 You can also drop the last parameter, in which case the program will default to enc.gaul if you are encrypting and dec.txt if you are decrypting
 
