@@ -20,7 +20,7 @@ offset.initSalt.posPower.offPower.prevPower.cap
 ```
 The key is inputed by the user.
 
-Each byte is offset by some constant offset value, its own index, and the value of a previous byte (encrypted).
+Each byte is essentially offset by some constant offset value, its own index, and the value of a previous byte (encrypted).
 
 
 Each parameter of the key controls a part of the internal state transformation and contributes to the complexity of the encryption:
