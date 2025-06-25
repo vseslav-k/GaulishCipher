@@ -88,6 +88,7 @@ see `Cipher::generateMagicNumber(int modifier, int idx)` in `GaulishCipher.cpp` 
 ## ❌ Weaknesses
 
 - Mean byte value of encrypted text can be used to narrow down the value of the key
+- Miniscule probability of key overlap (different keys leading to same ciphertext)
 - **Not cryptographically secure** — no use of secure PRNG, entropy estimation, or proven block cipher structure
 - **Not resistant to known plaintext attacks** (e.g. knowing the first few bytes can lead to key leakage)
 - Lacks forward secrecy or key derivation
