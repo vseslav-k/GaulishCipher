@@ -36,6 +36,7 @@ So each byte is shifted by a modifier,
 where modifer = (offset * offPower + current byte index * posPower + previous encrypted byte value * prevPower) % cap +1
 
 note that if the current byte index is 0, initSalt is used instead of previous encrypted byte value
+
 ---
 
 ## 🔄 Magic Numbers
