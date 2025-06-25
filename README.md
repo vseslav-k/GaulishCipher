@@ -101,14 +101,13 @@ First, download GaulishCipher.exe (source code files are not neccesary to run th
 
 Run the exe file directly by double clicking it. It will prompt you to enter what action you want to take (1 for encrypt, 2 for decrypt), target file path, key, and output file path.
 
-The program supports file paths with forward and backwards slashes. 
-The program does not care if the file path is in "double" or 'single' quotes, or no quotes
+- The program supports file paths with forward and backwards slashes. 
+- The program does not care if the file path is in "double" or 'single' quotes, or no quotes
+- If you only provide file name with no extension for output path, the program will encrypt as a .gaul file and decrypt as .txt by default.
+- If you only provide file name, no directory, for output path, the program will default to target path.
+- The program supports relative paths.
 
-If you only provide file name with no extension for output path, the program will encrypt as a .gaul file and decrypt as .txt by default.
-If you only provide file name, no directory, for output path, the program will default to target path.
-The program supports relative paths.
-
-Spaces in a file name can cause undefined behavior. Do not encrypt files with space in their name(might fix this later)
+❌Spaces in a file name can cause undefined behavior. Do not encrypt files with space in their name(might fix this later)❌
 
 You can also run the program from console. If you do you can use args. Args should be formatted the same as prompted input and need to be written in the following order
 
