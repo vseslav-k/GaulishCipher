@@ -46,7 +46,7 @@ For each byte, a magic number is generated, based on its calculated modifier, in
 This proccess is non-linear and non-continous, however, fully deterministic
 For most bytes the magic number will be 0, however for a significant portion, it will be nonzero.
 
-Magic numbers are generated with the `generateMagicNumber` function, which is implement through a series of arbitrary if-return statements
+Magic numbers are generated with the `generateMagicNumber` function, which is implemented through a series of arbitrary if-return statements
 
 For example:
 ```
