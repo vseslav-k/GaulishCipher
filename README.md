@@ -1,4 +1,4 @@
-# 🛡️ GaulishCipher
+# 🐗🛡️ GaulishCipher🛡️🐗
 
 **GaulishCipher** is a custom file encryption tool written in C++ that uses a position-based, pseudo-random byte transformation algorithm. It is designed for educational or novelty use, not secure production environments.
 
