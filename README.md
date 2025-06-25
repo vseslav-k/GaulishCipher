@@ -59,7 +59,7 @@ if ((cap * idx) % 10 == (modifier * idx) % 10) {
 }
 ...
 ```
-see `Cipher::generateMagicNumber(int modifier, int idx)` in GaulishCipher.cpp for all if statements
+see `Cipher::generateMagicNumber(int modifier, int idx)` in `GaulishCipher.cpp` for all if statements
 
 ---
 
